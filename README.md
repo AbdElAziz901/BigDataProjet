@@ -4,7 +4,7 @@
 Analyse et visualisation de données AIS (Automatic Identification System) de navires dans le golfe du Mexique.
 
 ## Objectif
-Créer une application complète d’exploration, nettoyage, visualisation et prédiction à partir du jeu de données `vessel-total-clean.csv`.
+Créer une application complète d’exploration, nettoyage, visualisation et prédiction à partir du jeu de données vessel-total-clean.csv.
 
 ## Fonctionnalités implémentées (R – RMarkdown)
 
@@ -29,9 +29,9 @@ Créer une application complète d’exploration, nettoyage, visualisation et pr
    – Tableaux croisés, tests du χ² et mosaicplots (VesselType ↔ Status, Cargo, etc.)
 
 5. **Prédiction**  
-   – Régression logistique multinomiale : prédiction de `VesselType`  
+   – Régression logistique multinomiale : prédiction de VesselType  
    – Régression linéaire : prédiction de la vitesse (SOG) + RMSE  
-   – Export du dataset nettoyé → `export_IA.csv`
+   – Export du dataset nettoyé → export_IA.csv
 
 ## Technologies
 - R (dplyr, ggplot2, leaflet, shiny, nnet, caret, corrplot, vcd, …)
@@ -40,8 +40,8 @@ Créer une application complète d’exploration, nettoyage, visualisation et pr
 ## Comment exécuter
 1. Installer R et RStudio.
 2. Installer les packages via install.packages(c("readxl", "ggplot2", "leaflet", "dplyr", "corrplot", "vcd", "shiny", "nnet", "caret", "mapview", "RColorBrewer")).
-3. Placer `vessel-total-clean.csv.xlsx` dans le chemin indiqué dans le script  
-4. Ouvrir `projet_BigData.Rmd` dans RStudio  
+3. Placer vessel-total-clean.csv.xlsx dans le chemin indiqué dans le script  
+4. Ouvrir projet_BigData.Rmd dans RStudio  
 5. Knit ou exécuter les chunks → graphiques, cartes et modèles générés automatiquement
 
 ## Contenu du dépôt

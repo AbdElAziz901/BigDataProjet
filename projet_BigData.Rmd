@@ -1,0 +1,1164 @@
+## Fonctionnalité 1
+
+### Description et exploration des données:
+
+• Description du jeu de données
+il faut mettre le path de fichier excel !!!!!!!!
+
+```{r}
+
+library(readxl)
+
+donnees<-read_excel("C:/Users/Aziz/Downloads/Big Data Projet/Big Data Projet/vessel-total-clean.csv.xlsx")
+```
+
+```{r}
+ID<-length(unique(donnees$id))
+print(paste("Nombre de données =",ID))
+
+MMSI<-length(unique(donnees$MMSI))
+print(paste("Nombre de bateaux =",MMSI))
+
+
+nombre_de_type_de_bateau_diff<- length(unique(donnees$VesselType))
+
+print(paste("Nombre de type de bateaux différents  =",nombre_de_type_de_bateau_diff))
+
+```
+
+• Statistiques descriptives univariées
+
+```{r}
+#Conversion en valeurs numériques
+donnees$Length <- as.numeric(donnees$Length)
+donnees$Width <- as.numeric(donnees$Width)
+donnees$Draft <- as.numeric(donnees$Draft)
+
+#Calculs des minimum et maximum de la longueur, de la largeur et de la profondeur des bateaux  
+minimum_longueur<-min(donnees$Length, na.rm =TRUE)
+minimum_largeur<-min(donnees$Width, na.rm =TRUE)
+minimum_draft<-min(donnees$Draft, na.rm =TRUE)
+maximum_longueur<-max(donnees$Length, na.rm =TRUE)
+maximum_largeur<-max(donnees$Width, na.rm =TRUE)
+maximum_draft<-max(donnees$Draft, na.rm =TRUE)
+
+#Calculs des moyennes de la largeur, longueur et profondeur des bateaux
+moy_longueur<-mean(donnees$Length, na.rm=TRUE)
+moy_largeur<-mean(donnees$Width, na.rm=TRUE)
+moy_profondeur<-mean(donnees$Draft, na.rm=TRUE)
+
+#Calculs des médianes de la largeur, longueur et profondeur des bateaux
+med_longueur<-median(donnees$Length, na.rm=TRUE)
+med_largeur<-median(donnees$Width, na.rm=TRUE)
+med_profondeur<-median(donnees$Draft, na.rm=TRUE)
+
+#Calculs des variances de la largeur, longueur et profondeur des bateaux
+var_longueur<-var(donnees$Length, na.rm=TRUE)
+var_largeur<-var(donnees$Width, na.rm=TRUE)
+var_profondeur<-var(donnees$Draft, na.rm=TRUE)
+
+#Calculs des écarts-types de la largeur, longueur et profondeur des bateaux
+ecart_longueur<-sd(donnees$Length, na.rm=TRUE)
+ecart_largeur<-sd(donnees$Width, na.rm=TRUE)
+ecart_profondeur<-sd(donnees$Draft, na.rm=TRUE)
+
+
+#Affichage des calculs 
+print(paste("La longueur minimale des bateaux est ",minimum_longueur," et la maximale est ",maximum_longueur))
+print(paste("La largeur minimale des bateaux est ",minimum_largeur," et la maximale est ",maximum_largeur))
+print(paste("La profondeur minimale des bateaux est ",minimum_draft," et la maximale est ",maximum_draft))
+print(paste("La moyenne pour la largeur est ",moy_largeur,", pour la  longueur est ",moy_longueur," et pour la profondeur ",moy_profondeur))
+print(paste("La médiane pour la largeur est ",med_largeur,", pour la  longueur est ",med_longueur," et pour la profondeur ",med_profondeur))
+print(paste("La variance pour la largeur est ",var_largeur,", pour la  longueur est ",var_longueur," et pour la profondeur ",var_profondeur))
+print(paste("L'écart-type pour la largeur est ",ecart_largeur,", pour la  longueur est ",ecart_longueur," et pour la profondeur ",ecart_profondeur))
+
+#Conversion en valeurs numériques
+donnees$LAT <- as.numeric(donnees$LAT)
+donnees$LON <- as.numeric(donnees$LON)
+
+#Calculs des minimum et maximum des latitudes et longitudes   
+min_latitude<-min(donnees$LAT, na.rm=TRUE)
+min_longitude<-min(donnees$LON, na.rm=TRUE)
+max_latitude<-max(donnees$LAT, na.rm=TRUE)
+max_longitude<-max(donnees$LON, na.rm=TRUE)
+
+#Calculs des moyennes des latitudes et longitudes
+moy_LAT<-mean(donnees$LAT, na.rm=TRUE)
+moy_LON<-mean(donnees$LON, na.rm=TRUE)
+
+#Calculs des médianes des latitudes et longitudes
+med_LAT<-median(donnees$LAT, na.rm=TRUE)
+med_LON<-median(donnees$LON, na.rm=TRUE)
+
+#Calculs des variances des latitudes et longitudes
+var_LAT<-var(donnees$LAT, na.rm=TRUE)
+var_LON<-var(donnees$LON, na.rm=TRUE)
+
+#Calculs des écarts-types des latitudes et longitudes
+ecart_LAT<-sd(donnees$LAT, na.rm=TRUE)
+ecart_LON<-sd(donnees$LON, na.rm=TRUE)
+
+#Affichage des calculs 
+print(paste("La latitude minimale est de ",min_latitude," et la maximale est de ",max_latitude))
+print(paste("La longitude minimale est de ",min_longitude," et la maximale est de ",max_longitude))
+print(paste("La moyenne de la latitude est de ",moy_LAT,"et celle de la longitude est de ",moy_LON))
+print(paste("La médiane de la latitude est ",med_LAT,"et celle de la longitude est ",med_LON))
+print(paste("La variance de la latitude est ",var_LAT,"et celle de la longitude est ",var_LON))
+print(paste("L'écart-type de la latitude vaut ",ecart_LAT,"et celle de la longitude vaut ",ecart_LON))
+
+#Conversion en valeurs numériques
+donnees$SOG<-as.numeric(donnees$SOG)
+
+#Calculs des minimum et maximum de la vitesse
+min_SOG<-min(donnees$SOG, na.rm=TRUE)
+max_SOG<-max(donnees$SOG, na.rm=TRUE)
+
+#Calcul de la moyenne de la vitesse
+moy_SOG<-mean(donnees$SOG, na.rm=TRUE)
+
+#Calcul de la médiane de la vitesse
+med_SOG<-median(donnees$SOG, na.rm=TRUE)
+
+#Calcul de la variance de la vitesse
+var_SOG<-var(donnees$SOG, na.rm=TRUE)
+
+#Calcul de l'écart-type de la vitesse
+ecart_SOG<-sd(donnees$SOG, na.rm=TRUE)
+
+#Affichage des calculs 
+print(paste("La vitesse minimale est de ",min_SOG,"noeuds et la maximale est de ",max_SOG,"noeuds"))
+print(paste("La moyenne de la vitesse est de ",moy_SOG))
+print(paste("La médiane de la vitesse est ",med_SOG))
+print(paste("La variance de la vitesse est ",var_SOG))
+print(paste("L'écart-type de la vitesse vaut ",ecart_SOG))
+
+```
+
+Visualisation avec des boites à moustaches
+
+```{r}
+boxplot(donnees$LAT)
+boxplot(donnees$LON)
+boxplot(donnees$SOG)
+boxplot(donnees$Length)
+boxplot(donnees$Width)
+boxplot(donnees$Draft)
+```
+
+• Nettoyage des données
+
+```{r}
+# Suppression des lignes dont une colonne contient les valeurs "NA" ou "\N", et les colonnes vides
+donnees_temp <- donnees[, colnames(donnees) != "BaseDateTime"]
+donnees_temp[donnees_temp == "\\N" | donnees_temp == ""] <- NA
+
+ligne_a_garder <- complete.cases(donnees_temp)
+donnees_clean <- donnees[ligne_a_garder, ]
+
+# Suppression des lignes ou la vitesse dans la colonne SOG dépasse les 65 nœuds (record de vitesse)
+
+donnees_clean$SOG <- as.numeric(donnees_clean$SOG)
+donnees_clean <- donnees_clean[donnees_clean$SOG <= 30 | is.na(donnees_clean$SOG), ]
+
+# Suppression des lignes ou la dimension du bateau est erronée (égale à 0)
+
+donnees_clean$Width <- as.numeric(donnees_clean$Width)
+donnees_clean <- donnees_clean[!(donnees_clean$Length == 0 & donnees_clean$Width == 0), ]
+donnees_clean <- donnees_clean[donnees_clean$Length != 0, ]
+donnees_clean <- donnees_clean[donnees_clean$Width != 0, ]
+
+# Suppression des lignes ou le tirant d'eau est nul
+
+donnees_clean$Draft <- as.numeric(donnees_clean$Draft)
+donnees_clean <- donnees_clean[donnees_clean$Draft != 0, ]
+
+# Suppression des lignes en dehors de la zone de Floride
+donnees_clean$LON<-as.numeric(donnees_clean$LON)
+donnees_clean$LAT<-as.numeric(donnees_clean$LAT)
+
+donnees_clean <- donnees_clean[donnees_clean$LON<=-82, ]
+
+```
+
+Nouvelles stats descriptives après nettoyage :
+
+```{r}
+ID<-length(unique(donnees_clean$id))
+print(paste("Nombre de données =",ID))
+
+MMSI<-length(unique(donnees_clean$MMSI))
+print(paste("Nombre de bateaux =",MMSI))
+
+```
+
+```{r}
+#Conversion en valeurs numériques
+donnees_clean$Length <- as.numeric(donnees_clean$Length)
+donnees_clean$Width <- as.numeric(donnees_clean$Width)
+donnees_clean$Draft <- as.numeric(donnees_clean$Draft)
+
+#Calculs des minimum et maximum de la longueur, de la largeur et de la profondeur des bateaux  
+minimum_longueur<-min(donnees_clean$Length, na.rm =TRUE)
+minimum_largeur<-min(donnees_clean$Width, na.rm =TRUE)
+minimum_draft<-min(donnees_clean$Draft, na.rm =TRUE)
+maximum_longueur<-max(donnees_clean$Length, na.rm =TRUE)
+maximum_largeur<-max(donnees_clean$Width, na.rm =TRUE)
+maximum_draft<-max(donnees_clean$Draft, na.rm =TRUE)
+
+#Calculs des moyennes de la largeur, longueur et profondeur des bateaux
+moy_longueur<-mean(donnees_clean$Length, na.rm=TRUE)
+moy_largeur<-mean(donnees_clean$Width, na.rm=TRUE)
+moy_profondeur<-mean(donnees_clean$Draft, na.rm=TRUE)
+
+#Calculs des médianes de la largeur, longueur et profondeur des bateaux
+med_longueur<-median(donnees_clean$Length, na.rm=TRUE)
+med_largeur<-median(donnees_clean$Width, na.rm=TRUE)
+med_profondeur<-median(donnees_clean$Draft, na.rm=TRUE)
+
+#Calculs des variances de la largeur, longueur et profondeur des bateaux
+var_longueur<-var(donnees_clean$Length, na.rm=TRUE)
+var_largeur<-var(donnees_clean$Width, na.rm=TRUE)
+var_profondeur<-var(donnees_clean$Draft, na.rm=TRUE)
+
+#Calculs des écarts-types de la largeur, longueur et profondeur des bateaux
+ecart_longueur<-sd(donnees_clean$Length, na.rm=TRUE)
+ecart_largeur<-sd(donnees_clean$Width, na.rm=TRUE)
+ecart_profondeur<-sd(donnees_clean$Draft, na.rm=TRUE)
+
+
+#Affichage des calculs 
+print(paste("La longueur minimale des bateaux est ",minimum_longueur," et la maximale est ",maximum_longueur))
+print(paste("La largeur minimale des bateaux est ",minimum_largeur," et la maximale est ",maximum_largeur))
+print(paste("La profondeur minimale des bateaux est ",minimum_draft," et la maximale est ",maximum_draft))
+print(paste("La moyenne pour la largeur est ",moy_largeur,", pour la  longueur est ",moy_longueur," et pour la profondeur ",moy_profondeur))
+print(paste("La médiane pour la largeur est ",med_largeur,", pour la  longueur est ",med_longueur," et pour la profondeur ",med_profondeur))
+print(paste("La variance pour la largeur est ",var_largeur,", pour la  longueur est ",var_longueur," et pour la profondeur ",var_profondeur))
+print(paste("L'écart-type pour la largeur est ",ecart_largeur,", pour la  longueur est ",ecart_longueur," et pour la profondeur ",ecart_profondeur))
+
+#Conversion en valeurs numériques
+donnees_clean$LAT <- as.numeric(donnees_clean$LAT)
+donnees_clean$LON <- as.numeric(donnees_clean$LON)
+
+#Calculs des minimum et maximum des latitudes et longitudes   
+min_latitude<-min(donnees_clean$LAT, na.rm=TRUE)
+min_longitude<-min(donnees_clean$LON, na.rm=TRUE)
+max_latitude<-max(donnees_clean$LAT, na.rm=TRUE)
+max_longitude<-max(donnees_clean$LON, na.rm=TRUE)
+
+#Calculs des moyennes des latitudes et longitudes
+moy_LAT<-mean(donnees_clean$LAT, na.rm=TRUE)
+moy_LON<-mean(donnees_clean$LON, na.rm=TRUE)
+
+#Calculs des médianes des latitudes et longitudes
+med_LAT<-median(donnees_clean$LAT, na.rm=TRUE)
+med_LON<-median(donnees_clean$LON, na.rm=TRUE)
+
+#Calculs des variances des latitudes et longitudes
+var_LAT<-var(donnees_clean$LAT, na.rm=TRUE)
+var_LON<-var(donnees_clean$LON, na.rm=TRUE)
+
+#Calculs des écarts-types des latitudes et longitudes
+ecart_LAT<-sd(donnees_clean$LAT, na.rm=TRUE)
+ecart_LON<-sd(donnees_clean$LON, na.rm=TRUE)
+
+#Affichage des calculs 
+print(paste("La latitude minimale est de ",min_latitude," et la maximale est de ",max_latitude))
+print(paste("La longitude minimale est de ",min_longitude," et la maximale est de ",max_longitude))
+print(paste("La moyenne de la latitude est de ",moy_LAT,"et celle de la longitude est de ",moy_LON))
+print(paste("La médiane de la latitude est ",med_LAT,"et celle de la longitude est ",med_LON))
+print(paste("La variance de la latitude est ",var_LAT,"et celle de la longitude est ",var_LON))
+print(paste("L'écart-type de la latitude vaut ",ecart_LAT,"et celle de la longitude vaut ",ecart_LON))
+
+#Conversion en valeurs numériques
+donnees_clean$SOG<-as.numeric(donnees_clean$SOG)
+
+#Calculs des minimum et maximum de la vitesse
+min_SOG<-min(donnees_clean$SOG, na.rm=TRUE)
+max_SOG<-max(donnees_clean$SOG, na.rm=TRUE)
+
+#Calcul de la moyenne de la vitesse
+moy_SOG<-mean(donnees_clean$SOG, na.rm=TRUE)
+
+#Calcul de la médiane de la vitesse
+med_SOG<-median(donnees_clean$SOG, na.rm=TRUE)
+
+#Calcul de la variance de la vitesse
+var_SOG<-var(donnees_clean$SOG, na.rm=TRUE)
+
+#Calcul de l'écart-type de la vitesse
+ecart_SOG<-sd(donnees_clean$SOG, na.rm=TRUE)
+
+#Affichage des calculs 
+print(paste("La vitesse minimale est de ",min_SOG,"noeuds et la maximale est de ",max_SOG,"noeuds"))
+print(paste("La moyenne de la vitesse est de ",moy_SOG))
+print(paste("La médiane de la vitesse est ",med_SOG))
+print(paste("La variance de la vitesse est ",var_SOG))
+print(paste("L'écart-type de la vitesse vaut ",ecart_SOG))
+```
+
+```{r}
+#Boites à moustaches 
+boxplot(donnees_clean$LAT)
+boxplot(donnees_clean$LON)
+boxplot(donnees_clean$SOG)
+boxplot(donnees_clean$Length)
+boxplot(donnees_clean$Width)
+boxplot(donnees_clean$Draft)
+```
+
+## Fonctionnalité 2 :
+
+### Représentation graphique :
+
+Répartition des bateaux suivant leur type
+
+```{r}
+library(ggplot2)
+# Supprimer les doublons de MMSI pour ne garder que les bateaux uniques
+
+donnees_unique <- donnees_clean[!duplicated(donnees_clean$MMSI), ]
+
+# Compter le nombre de bateaux par type
+
+counts <- table(donnees_unique$VesselType)
+
+# Convertir les comptes en data frame
+
+counts_df <- as.data.frame(counts)
+colnames(counts_df) <- c("VesselType", "Count")
+
+# Créer le camembert
+
+c <- ggplot(counts_df, aes(x = "", y = Count, fill = VesselType)) +
+  geom_bar(stat = "identity", width = 0.4) +
+  coord_polar("y", start = 0) +
+  theme_void() +
+  labs(title = "Nombre de bateaux par type (MMSI uniques)") +
+  scale_fill_manual(values = rainbow(length(counts_df$VesselType))) +
+  geom_text(aes(label = ""), 
+            position = position_stack(vjust = 0.5))
+
+c
+ggsave("camembert_type.png", plot = c, width = 8, height = 6, units = "in", dpi = 300)
+```
+
+Carte avec la répartition :
+
+```{r}
+#install.packages("mapview")
+library(mapview)
+library(leaflet)
+donnees_clean$LAT <- as.numeric(donnees_clean$LAT)
+donnees_clean$LON <- as.numeric(donnees_clean$LON)
+
+# Carte avec des couleurs par rapport au type de bateau
+
+if ("VesselType" %in% colnames(donnees_clean)) {
+  # Créer une palette de couleurs pour VesselType
+  niveaux_type_navire <- unique(donnees_clean$VesselType[!is.na(donnees_clean$VesselType)])
+  palette <- colorFactor(palette = "Set1", domain = niveaux_type_navire)
+ 
+  carte_type_navire <- leaflet(data = donnees_clean) %>%
+    addTiles() %>%
+    addCircles(
+      lng = ~LON,
+      lat = ~LAT,
+      radius = 1000,
+      color = ~palette(VesselType),
+      fillOpacity = 0.1,
+      popup = ~paste("Type de navire :", VesselType, "<br>",
+                     ifelse(exists("VesselName", where = donnees_clean), VesselName, MMSI))
+    ) %>%
+    fitBounds(lng1 = -98, lat1 = 18, lng2 = -80, lat2 = 31) %>%
+    addLegend("bottomright", pal = palette, values = ~VesselType, title = "Type de navire")
+ 
+  print(carte_type_navire)
+  #htmlwidgets::saveWidget(carte_type_navire, "positions_navires_par_type_carte.html")
+  #mapshot(carte_type_navire, file = "positions_navires_par_type_carte.png", vwidth = 1200, vheight = 800)
+  #cat("Carte colorée par type de navire enregistrée sous 'positions_navires_par_type_carte.png' dans", getwd(), "\n")
+} #else {
+  #warning("Colonne 'VesselType' non trouvée. Carte colorée par type de navire ignorée.")
+#}
+
+```
+
+### Histogrammmes :
+
+```{r}
+#install.packages("ggplot2")
+library(ggplot2)
+#install.packages("RColorBrewer")
+library(RColorBrewer)
+library(dplyr)
+```
+
+```{r}
+
+# Extraction des bateaux uniques par MMSI
+bateaux_uniques <- donnees_clean %>%
+  distinct(MMSI, .keep_all = TRUE) %>%
+  select(MMSI, Length, Cargo)
+
+bateaux_uniques$Length<-as.numeric(bateaux_uniques$Length)
+# Histogramme par tranche de longueur ---
+
+
+# Création des tranches de taille (tranches de 20 m)
+
+max_longueur <- ceiling(max(bateaux_uniques$Length, na.rm = TRUE))
+tranches <- seq(0, max_longueur + 20, by = 20)
+labels_tranches <- paste0(head(tranches, -1), "-", tail(tranches, -1), "m")
+
+# Assignation de chaque bateau à une tranche
+
+bateaux_uniques$tranche_taille <- cut(bateaux_uniques$Length,
+                                      breaks = tranches,
+                                      labels = labels_tranches,
+                                      include.lowest = TRUE,
+                                      right = FALSE)
+
+# Comptage du nombre de bateaux par tranche
+
+comptage_tranches <- bateaux_uniques %>%
+  group_by(tranche_taille) %>%
+  summarise(nombre_bateaux = n()) %>%
+  filter(!is.na(tranche_taille))
+
+# Affichage de l'histogramme pour la longueur
+
+ggplot(data = comptage_tranches, aes(x = tranche_taille, y = nombre_bateaux)) +
+  geom_bar(stat = "identity", fill = "#3B82F6", color = "#2563EB") +
+  labs(title = "Répartition des bateaux par tranche de longueur",
+       x = "Tranche de longueur (m)",
+       y = "Nombre de bateaux") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Sauvegarde du graphique
+
+ggsave("histogramme_bateaux_par_taille.png", width = 8, height = 6, dpi = 300)
+cat("Histogramme sauvegardé sous 'histogramme_bateaux_par_taille.png' dans", getwd(), "\n")
+
+# Histogramme par type de cargo ---
+
+# Comptage du nombre de bateaux par valeur unique de Cargo
+comptage_cargo <- bateaux_uniques %>%
+  group_by(Cargo) %>%
+  summarise(nombre_bateaux = n()) %>%
+  filter(!is.na(Cargo))
+
+# Définir une palette de couleurs (ajustée selon le nombre de catégories)
+nb_cargo <- nrow(comptage_cargo)  # Nombre de valeurs uniques de Cargo
+if (nb_cargo <= 8) {
+  palette_couleurs <- brewer.pal(min(nb_cargo, 8), "Set1")  # Palette RColorBrewer
+} else {
+  palette_couleurs <- colorRampPalette(brewer.pal(8, "Set1"))(nb_cargo)  # Étendre la palette
+}
+
+# Affichage de l'histogramme pour Cargo avec une couleur par catégorie
+ggplot(data = comptage_cargo, aes(x = Cargo, y = nombre_bateaux, fill = Cargo)) +
+  geom_bar(stat = "identity", color = "black") +  # Bordure noire pour plus de clarté
+  scale_fill_manual(values = palette_couleurs) +  # Appliquer la palette de couleurs
+  labs(title = "Répartition des bateaux par type de cargo",
+       x = "Type de cargo",
+       y = "Nombre de bateaux") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "right")  # Afficher la légende à droite
+
+# Sauvegarde du graphique
+ggsave("histogramme_bateaux_par_cargo.png", width = 10, height = 6, dpi = 300)  # Largeur augmentée pour la légende
+cat("Histogramme sauvegardé sous 'histogramme_bateaux_par_cargo.png' dans", getwd(), "\n")
+donnees_uniques <- donnees_clean[!duplicated(donnees_clean$MMSI), ]
+
+# Comptage des bateaux par type
+repartition_bateaux <- as.data.frame(table(donnees_uniques$VesselType))
+
+# Création du graphique
+ggplot(repartition_bateaux, aes(x = Var1, y = Freq, fill = Var1)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = "Répartition des bateaux uniques par type",
+       x = "Type de bateau",
+       y = "Nombre de bateaux") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Histogramme du port le plus utilisé :
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+# Définition du tableau des ports du golfe du Mexique
+
+ports_golfe_mexique <- tibble(
+  port_name = c("Veracruz", "Tampico", "Altamira", "Coatzacoalcos", "Progreso", "Houston", "New Orleans", "Mobile", "Tampa"),
+  LON = c(-96.13, -97.87, -97.90, -94.42, -89.67, -95.37, -90.07, -88.04, -82.45),
+  LAT = c(19.20, 22.25, 22.40, 18.13, 21.28, 29.76, 29.95, 30.69, 27.95)
+)
+
+# Filtrage des bateaux à l'arrêt (Status = 5)
+
+bateaux_arret <- donnees_clean %>%
+  filter(Status == 5) %>%
+  select(LON, LAT)  
+
+# Association de chaque bateau au port le plus proche (distance euclidienne)
+
+bateaux_arret <- bateaux_arret %>%
+  mutate(
+    closest_port = apply(., 1, function(row) {
+      lon1 <- as.numeric(row["LON"])
+      lat1 <- as.numeric(row["LAT"])
+      distances <- sqrt((ports_golfe_mexique$LON - lon1)^2 + (ports_golfe_mexique$LAT - lat1)^2) * 111  # Approx. km
+      if (min(distances) <= 30) {  # Seuil de 30 km
+        ports_golfe_mexique$port_name[which.min(distances)]
+      } else {
+        NA
+      }
+    })
+  ) %>%
+  filter(!is.na(closest_port))  # Garde seulement les bateaux associés à un port
+
+# Compte le nombre d'observations par port
+
+ports_count <- bateaux_arret %>%
+  group_by(closest_port) %>%
+  summarise(nb_bateaux = n(), .groups = "drop") %>%
+  rename(port_name = closest_port)
+
+# Création de l'histogramme
+
+p <- ggplot(ports_count, aes(x = reorder(port_name, -nb_bateaux), y = nb_bateaux)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(
+    title = "Nombre d'observations de bateaux à l'arrêt (Status = 5) par port",
+    x = "Port",
+    y = "Nombre d'observations"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Affichage le graphique
+print(p)
+
+# Export de l'histogramme en PNG
+
+ggsave("histogramme_ports.png", plot = p, width = 8, height = 6, units = "in", dpi = 300)
+```
+
+## Fonctionnalité 3 :
+
+### Trajectoire pour 1 bateau
+
+```{r}
+library(dplyr)
+# Filtrer les données pour le bateau HERO
+hero= donnees_clean %>%filter(MMSI == 367477280) %>%arrange(BaseDateTime)# arrange(BaseDateTime) trie les points du plus ancien au plus récent
+
+# Afficher la trajectoire sur une carte interactive
+leaflet(data = hero) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  addPolylines(lng = ~LON, lat = ~LAT, color = "red", weight = 3, opacity = 0.8)#%>%
+  #addCircleMarkers(lng = ~LON, lat = ~LAT, radius = 3, color = "pink", fillOpacity = 0.7)
+```
+
+### Trajectoires de tous les bateaux :
+
+```{r}
+bateaux_selectionnes<-donnees_clean
+
+# Palette de couleurs
+palette <- colorFactor(rainbow(length(unique(donnees_clean$MMSI))), domain = donnees_clean$MMSI)
+
+#Création de la carte 
+carte <- leaflet() %>%
+  addTiles() # fond de carte par défaut 
+
+#Test pour 4 bateaux 
+subset_ids<-bateaux_selectionnes %>%
+  distinct(MMSI) %>%
+  slice_head(n=4)%>%
+  pull(MMSI)
+
+vessel_subset<-bateaux_selectionnes%>%
+  filter(MMSI %in% subset_ids)%>%
+  arrange(BaseDateTime)
+
+bateaux_selectionnes<-bateaux_selectionnes%>%
+  arrange(BaseDateTime)
+
+#Affichage tous les bateaux 
+bateaux_selectionnes %>%
+  group_by(MMSI) %>% # Regroupement des données par MMSI 
+  group_split() %>%  # Crée une liste de data frames, un par MMSI
+  purrr::walk(function(df){         # Applique une fonction à chaque sous-data frame
+    
+    ce_mmsi<-df$MMSI[1]             # Récupère le MMSI de ce bateau
+    cette_couleur<-palette(ce_mmsi) # Assigne une couleur à ce MMSI via la palette
+    carte<<-carte %>%   #Modifie carte
+      addPolylines(data = df,lng = ~LON,lat = ~LAT, color = ~cette_couleur,weight = 2,opacity = 0.7) #Ajoute la tarjectoire du bateau
+      
+    
+  })
+print(carte)
+```
+
+### Trajectoire d’un bateau par son nom :
+
+```{r}
+#install.packages("shiny")
+library(shiny)
+library(leaflet)
+library(dplyr)
+
+# Assume donnees_clean contient toutes les données nécessaires
+ui <- fluidPage(
+  titlePanel("Trajectoire d’un bateau"),  # Titre de l'application en haut de la page
+
+  sidebarLayout(                          # Mise en page avec une barre latérale et un panneau principal
+    sidebarPanel(
+      selectInput("selected_name",       # Menu déroulant pour sélectionner un nom de bateau
+                  "Choisir un bateau :", # Étiquette du menu
+                  choices = unique(donnees_clean$VesselName), # Choix = noms de bateaux uniques
+                  selected = unique(donnees_clean$VesselName)[1]) # Valeur sélectionnée par défaut = premier bateau
+    ),
+    mainPanel(
+      leafletOutput("map", height = 600) # Zone d'affichage de la carte Leaflet, hauteur 600px
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Reactive = données filtrées selon le nom du bateau sélectionné
+  donnees_filtres <- reactive({
+    donnees_clean %>%
+      filter(VesselName == input$selected_name)%>% # Garde uniquement les lignes correspondant au nom sélectionné
+      arrange(BaseDateTime)
+  })
+  
+  # Initialisation de la carte vide (avec fond OpenStreetMap)
+  output$map <- renderLeaflet({
+    leaflet() %>%
+      addTiles()  # Ajoute les tuiles de fond de carte
+  })
+  
+  # Observer : à chaque changement du nom sélectionné, mettre à jour la carte
+  observe({
+    df <- donnees_filtres()  # Données du bateau sélectionné
+    
+    # leafletProxy permet de modifier la carte existante sans la recréer
+    proxy <- leafletProxy("map", data = df) %>%
+      clearShapes() %>%  # Efface les anciennes lignes
+      addPolylines(      # Ajoute la trajectoire sous forme de ligne
+        lng = ~LON,      
+        lat = ~LAT,      
+        color = "grey",  
+        weight = 2,      
+        opacity = 0.8,   
+        label = ~VesselName  # Affiche le nom du bateau au survol
+      )
+  })
+}
+
+shinyApp(ui, server)
+
+```
+
+### Routes principales :
+
+```{r}
+
+if (!require(readxl)) install.packages("readxl")
+if (!require(leaflet)) install.packages("leaflet")
+library(readxl)
+library(leaflet)
+
+# Copie de donnees clean + organisation par date puis par MMSI
+donnees_chemin <- donnees_clean[order(donnees_clean$BaseDateTime,donnees_clean$MMSI), ]
+
+
+vessel_counts <- as.data.frame(table(donnees_chemin$MMSI)) # On compte le nombre de points GPS pour chaque navire identifié par son MMSI
+colnames(vessel_counts) <- c("MMSI", "PointCount") # On renomme les colonnes pour plus de clarté
+vessel_counts$MMSI <- as.character(vessel_counts$MMSI) #conversion des MMSI en caractère
+
+ # On calcule le seuil du 90e percentile des fréquences : seuls les 10 % de navires les plus observés vont être considérés comme "routes principales" pour la visualisation
+threshold <- quantile(vessel_counts$PointCount, 0.9) 
+
+# On sélectionne les MMSI des navires qui dépassent ce seuil → routes principales
+route_principale_mmsi <- vessel_counts$MMSI[vessel_counts$PointCount >= threshold]
+
+
+
+all_mmsi <- unique(donnees_chemin$MMSI) # On récupère tous les MMSI présents dans les données
+mmsi_non_principale <- setdiff(all_mmsi, route_principale_mmsi) # On identifie les MMSI qui ne font PAS partie des routes principales → routes secondaires
+
+m <- leaflet() %>%
+  addTiles()  # fond de carte par défaut
+
+# Affichage routes non principales (gris)
+
+# Pour chaque navire appartenant aux routes secondaires
+for (mmsi in mmsi_non_principale) { 
+  # On extrait les données correspondant à ce navire
+  vessel_data <- donnees_chemin[donnees_chemin$MMSI == mmsi, ] 
+  
+  # Si le navire a plus d’un point (au moins une trajectoire à tracer)
+  if (nrow(vessel_data) > 1) {
+    # On ajoute sa route à la carte en gris
+    m <- m %>% addPolylines(lng = vessel_data$LON, lat = vessel_data$LAT,
+                            color = "gray",
+                            weight = 1,
+                            opacity = 0.3,
+                            popup = paste("MMSI:", mmsi))
+  }
+}
+
+# Affichage routes non principales (rouge)
+
+# Si on a au moins une route principale
+if (length(route_principale_mmsi) > 0) {
+  # Pour chaque MMSI de navire faisant parti de la route principale
+  for (mmsi in route_principale_mmsi) {
+    # On extrait les données correspondantes
+    vessel_data <- donnees_chemin[donnees_chemin$MMSI == mmsi, ]
+    
+     # Si on a plus d’un point, on peut tracer une trajectoire
+    if (nrow(vessel_data) > 1) {
+      # On ajoute  sa route à la carte en rouge
+      m <- m %>% addPolylines(lng = vessel_data$LON, lat = vessel_data$LAT,
+                              color = "red",
+                              weight = 3,
+                              opacity = 0.8,
+                              popup = paste("MMSI:", mmsi, "(Main Route)"))
+    }
+  }
+}
+
+
+# Affichage de la carte Leaflet avec toutes les routes ajoutées
+m
+
+```
+
+Partie Bonus :
+
+```{r}
+
+
+# Charger les données
+data <- donnees_clean
+
+# Filtrer les bateaux de type Cargo (VesselType entre 70 et 79)
+cargo_data <- data[data$VesselType >= 70 & data$VesselType <= 79, ]
+
+# Calculer le tirant d'eau minimum par MMSI pour les bateaux Cargo
+min_draft <- aggregate(Draft ~ MMSI, cargo_data, min, na.rm = TRUE)
+
+# Joindre les données minimales avec le dataset Cargo
+cargo_with_min <- merge(cargo_data, min_draft, by = "MMSI", suffixes = c("", "_min"))
+
+# Définir un seuil (ex. 20% au-dessus du minimum pour considérer comme "plein")
+seuil <- 0.2
+cargo_with_min$Status <- ifelse(cargo_with_min$Draft > cargo_with_min$Draft_min * (1 + seuil), "Plein", "Vide")
+
+# Définir la route Houston-Nouvelle-Orléans
+route_lat_min <- 28.0
+route_lat_max <- 30.0
+route_lon_min <- -96.0
+route_lon_max <- -89.0
+route_data <- cargo_with_min[
+  cargo_with_min$LAT >= route_lat_min & cargo_with_min$LAT <= route_lat_max &
+  cargo_with_min$LON >= route_lon_min & cargo_with_min$LON <= route_lon_max, ]
+
+# Résultat par MMSI sur la route
+route_status <- aggregate(Status ~ MMSI, route_data, 
+                         function(x) c(Plein = sum(x == "Plein", na.rm = TRUE), 
+                                       Vide = sum(x == "Vide", na.rm = TRUE)))
+
+# Convertir en data frame avec colonnes nommées
+route_status <- data.frame(MMSI = route_status$MMSI, 
+                          Count_Plein = route_status$Status[, "Plein"], 
+                          Count_Vide = route_status$Status[, "Vide"])
+
+# Ajouter une colonne pour le total des observations
+route_status$Total <- route_status$Count_Plein + route_status$Count_Vide
+
+# Ajouter une colonne pour le ratio Vide/Plein
+route_status$Ratio_Vide_Plein <- route_status$Count_Vide / route_status$Count_Plein
+route_status$Ratio_Vide_Plein <- ifelse(is.infinite(route_status$Ratio_Vide_Plein) | is.na(route_status$Ratio_Vide_Plein), 0, route_status$Ratio_Vide_Plein)  # Gérer les cas où Count_Plein = 0
+
+# Ajouter une classification (majoritairement Plein ou Vide)
+route_status$Majority <- ifelse(route_status$Count_Plein > route_status$Count_Vide, "Majoritairement Plein", 
+                               ifelse(route_status$Count_Vide > route_status$Count_Plein, "Majoritairement Vide", "Équilibré"))
+
+# Afficher les résultats
+print(route_status)
+```
+
+## Fonctionalité 4 :
+
+### Correlation entre les différentes variables
+
+Test de corrélation entre Length et Width
+
+```{r}
+
+correlation <- cor(donnees_clean$Length, donnees_clean$Width, use = "complete.obs")
+print(paste("Coefficient de corrélation de Pearson :", round(correlation, 3)))
+
+test <- cor.test(donnees_clean$Length, donnees_clean$Width, method = "pearson")
+print(test)
+
+ggplot(donnees_clean, aes(x = Length, y = Width)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", color = "red", se = FALSE) + 
+  labs(title = "Nuage de points et droite de régression",
+       x = "Longueur du bateau", y = "Largeur du bateau") +
+  theme_minimal()
+```
+
+Matrice représentative des corrélations
+
+```{r}
+#install.packages("corrplot")
+library(corrplot)
+donnees_num<-donnees_clean[, sapply(donnees_clean, is.numeric)]
+
+donnees_num <- donnees_num[, colSums(is.na(donnees_num)) < nrow(donnees_num)]
+
+matrice_corr<-cor(donnees_num, use = "pairwise.complete.obs")
+
+corrplot(matrice_corr)
+```
+
+```{r}
+library(dplyr)
+#install.packages("vcd")
+library(vcd) # Pour mosaicplot
+library(ggplot2) # Pour des visualisations alternatives
+```
+
+### Etude des relations entre variables qualitatives :
+
+Relation entre VesselType et Status
+
+```{r}
+donnees_test<-donnees_clean #copie de donnees_clean
+donnees_test$VesselType<-as.numeric(donnees_test$VesselType) # Conversion de VesselType en numérique
+
+
+# Création d'une nouvelle colonne qui regroupe les types de navires en catégories
+donnees_test$VesselType_groupe <-cut(
+  donnees_test$VesselType,
+  breaks = c(60,70, 80, Inf),      
+  labels = c("Passenger","Cargo", "Tanker"),
+  right = FALSE 
+)
+
+# Création d'une nouvelle colonne pour regrouper certains statuts spécifiques
+donnees_test$Status_groupe <- ifelse(
+  donnees_test$Status %in% c(1, 5), #on regroupe 1 et 5 dans un et on regroupe le reste dans un autre 
+  "A l'arrêt",
+  "autres"
+)
+
+# Création d’un tableau croisé entre le type de navire par groupe et les groupes de statut
+tab_croise <- table(donnees_test$VesselType_groupe, donnees_test$Status_groupe)
+print(tab_croise) # Affiche le tableau croisé
+```
+
+```{r}
+# Test du chi²
+test_chi2 <- chisq.test(tab_croise)
+print(test_chi2) # Si p-value < 0.05 : dépendance significative
+
+```
+
+```{r}
+# Mosaicplot
+mosaicplot(tab_croise, 
+           main = "Relation entre VesselType et Status",
+           shade = TRUE, # Colore les résidus du test chi²
+           las = 1 # Orientation des étiquettes
+)
+```
+
+Relation entre VesselType et Cargo
+
+```{r}
+donnees_test<-donnees_clean
+donnees_test$VesselType<-as.numeric(donnees_test$VesselType)
+donnees_test$Cargo<-as.numeric(donnees_test$Cargo)
+
+# Création d'une nouvelle colonne qui regroupe les types de navires en catégories
+donnees_test$VesselType_groupe <-cut(
+  donnees_test$VesselType,
+  breaks = c(70, 80, Inf),      
+  labels = c("Cargo", "Tanker"),
+  right = FALSE 
+)
+
+# Création d'une nouvelle colonne qui regroupe les types de cargaison en catégories
+donnees_test$Cargo_groupe <- cut(
+  donnees_test$Cargo,
+  breaks=c(70,80,90,Inf),
+  labels = c("Minerais","Produits forestiers ","Marchandises diverses"),
+  right = FALSE 
+)
+
+tab_croise <- table(donnees_test$VesselType_groupe, donnees_test$Cargo_groupe)
+print(tab_croise)
+```
+
+```{r}
+# Test du chi²
+test_chi2 <- chisq.test(tab_croise)
+print(test_chi2) # Si p-value < 0.05 : dépendance significative
+
+```
+
+```{r}
+# Mosaicplot
+mosaicplot(tab_croise, 
+           main = "Relation entre VesselType et Cargo",
+           shade = TRUE, # Colore les résidus du test chi²
+           las = 1 # Orientation des étiquettes
+)
+```
+
+Relation entre VesselType et TransceiverClass
+
+```{r}
+donnees_test<-donnees
+donnees_test$VesselType<-as.numeric(donnees_test$VesselType)
+
+# Création d'une nouvelle colonne qui regroupe les types de navires en catégories
+donnees_test$VesselType_groupe <-cut(
+  donnees_test$VesselType,
+  breaks = c(60, 70, 80, Inf),      
+  labels = c("60-69", "70-79", ">80"),
+  right = FALSE 
+)
+
+tab_croise <- table(donnees_test$VesselType_groupe, donnees$TransceiverClass)
+print(tab_croise)
+```
+
+```{r}
+# Test du chi²
+test_chi2 <- chisq.test(tab_croise)
+print(test_chi2) # Si p-value < 0.05 : dépendance significative
+
+```
+
+```{r}
+# Mosaicplot
+mosaicplot(tab_croise, 
+           main = "Relation entre VesselType et TransceiverClass",
+           shade = TRUE, # Colore les résidus du test chi²
+           las = 1 # Orientation des étiquettes
+)
+```
+
+Relation entre Statut et Cargo
+
+```{r}
+donnees_test<-donnees_clean
+donnees_test$Cargo<-as.numeric(donnees_test$Cargo)
+
+# Création d'une nouvelle colonne pour regrouper certains statuts spécifiques
+donnees_test$Status_groupe <- ifelse(
+  donnees_test$Status %in% c(1, 5), #on regroupe 1 et 5 dans un et on regroupe le reste dans un autre 
+  "1&5",
+  "autres"
+)
+
+# Création d'une nouvelle colonne qui regroupe les types de cargaison en catégories
+donnees_test$Cargo_groupe <- cut(
+  donnees_test$Cargo,
+  breaks=c(70,80,90),
+  labels = c("Minerais","Produits forestiers & Marchandises diverses"),
+  right = FALSE 
+)
+
+tab_croise <- table(donnees_test$Status_groupe, donnees_test$Cargo_groupe)
+print(tab_croise)
+
+```
+
+```{r}
+# Test du chi²
+test_chi2 <- chisq.test(tab_croise)
+print(test_chi2) # Si p-value < 0.05 : dépendance significative
+
+```
+
+```{r}
+# Mosaicplot
+mosaicplot(tab_croise, 
+           main = "Relation entre Statut et Cargo",
+           shade = TRUE, # Colore les résidus du test chi²
+           las = 1 # Orientation des étiquettes
+)
+```
+
+## Fonctionnalité 5 :
+
+### Regression Logistique : Prédiction de la variable VesselType en fonction des variables pertinentes.
+
+```{r}
+library(readxl)
+library(nnet)     # pour la régression logistique multinomiale
+library(caret)    # pour l'évaluation
+library(dplyr)
+
+
+donnees <- read_excel("C:/Users/Aziz/Downloads/Big Data Projet/Big Data Projet/vessel-total-clean.csv.xlsx")
+
+# Filtre des données 
+
+# Suppression des lignes dont une colonne contient les valeurs "NA" ou "\N", et les colonnes vides
+donnees_temp <- donnees[, colnames(donnees) != "BaseDateTime"]
+donnees_temp[donnees_temp == "\\N" | donnees_temp == ""] <- NA
+
+ligne_a_garder <- complete.cases(donnees_temp)
+donnees_clean2 <- donnees[ligne_a_garder, ]
+
+# Suppression des lignes ou la vitesse dans la colonne SOG dépasse les 65 nœuds (record de vitesse)
+
+donnees_clean2$SOG <- as.numeric(donnees_clean2$SOG)
+donnees_clean2 <- donnees_clean2[donnees_clean2$SOG <= 30 | is.na(donnees_clean2$SOG), ]
+
+# Suppression des lignes ou la dimension du bateau est erronée (égale à 0)
+
+donnees_clean2$Width <- as.numeric(donnees_clean2$Width)
+donnees_clean2 <- donnees_clean2[!(donnees_clean2$Length == 0 & donnees_clean2$Width == 0), ]
+donnees_clean2 <- donnees_clean2[donnees_clean2$Length != 0, ]
+donnees_clean2 <- donnees_clean2[donnees_clean2$Width != 0, ]
+
+# Suppression des lignes ou le tirant d'eau est nul
+
+donnees_clean2$Draft <- as.numeric(donnees_clean2$Draft)
+donnees_clean2 <- donnees_clean2[donnees_clean2$Draft != 0, ]
+
+
+# Un point par bateau
+data_tests_unique <- donnees_clean2 %>%
+  group_by(MMSI) %>% #regrouper par MMSI
+  slice(1) %>% #prendre la première ligne de chaque 
+  ungroup() #dégrouper
+
+# Préparation des données pour la modélisation
+donnees_pred <- data_tests_unique %>%
+  select(VesselType, SOG, Length, Width, Draft, Cargo, Status,COG) %>% #On récupère les colonnes qui nous intéressent potentiellement 
+  filter(!is.na(VesselType)) %>%
+  mutate(                      #Conversion pour eviter les problèmes lors des calculs 
+    Length = as.numeric(Length),
+    Width = as.numeric(Width),
+    Draft = as.numeric(Draft),
+    SOG = as.numeric(SOG),
+    COG = as.numeric(COG),
+    VesselType = as.factor(VesselType),
+    Cargo = as.factor(Cargo),
+    Status = as.factor(Status)
+  ) %>%
+  na.omit()  
+
+# Séparation des données en jeu d'entraînement et jeu de test (80% / 20%)
+set.seed(123)   # Pour garantir la reproductibilité du tirage aléatoire
+trainIndex <- createDataPartition(donnees_pred$VesselType, p = 0.8, list = FALSE)
+trainData <- donnees_pred[trainIndex, ]
+testData <- donnees_pred[-trainIndex, ]
+
+# Modèle de régression logistique multinomiale
+model <- multinom(VesselType ~ Length + Width + Draft + SOG , data = trainData)
+summary(model)
+
+# Prédictions sur les données de test
+predictions <- predict(model, testData)
+
+
+# Évaluation des performances du modèle via une matrice de confusion
+confusionMatrix(predictions, testData$VesselType)
+
+
+# Sélection d’un échantillon de 1000 bateaux (ou moins si le test set est plus petit)
+sample_test <- testData[1:min(1000, nrow(testData)), ]
+# Prédictions sur cet échantillon
+sample_pred <- predict(model, sample_test)
+
+# Résultats observés vs prédits
+resultats <- data.frame(Observée = sample_test$VesselType, Prédite = sample_pred) # Création d’un tableau comparant les classes observées et les classes prédites
+head(resultats, 10) # Affichage des 10 premières lignes du tableau de résultats
+
+# Obtenir la matrice de confusion détaillée
+conf_matrix <- confusionMatrix(predictions, testData$VesselType)
+
+# Affichage de la sensibilité (Recall), précision, etc. pour chaque VesselType
+stats_par_classe <- conf_matrix$byClass
+print(stats_par_classe)
+
+# Ajouter F1-Score 
+f1_scores <- 2 * (stats_par_classe[, "Sensitivity"] * stats_par_classe[, "Precision"]) /
+               (stats_par_classe[, "Sensitivity"] + stats_par_classe[, "Precision"])
+
+# Créer un tableau résumé
+resum_stats <- data.frame(
+  Type_bateau = rownames(stats_par_classe),
+  Taux_de_reconnaissance = stats_par_classe[, "Sensitivity"],
+  Precision = stats_par_classe[, "Precision"],
+  Indice_de_justesse = round(f1_scores, 3)
+)
+
+# Trier par F1-score décroissant
+resum_stats <- resum_stats[order(-resum_stats$Indice_de_justesse), ]
+print(resum_stats)
+
+```
+
+Autre exemple : sélection de quelques bateaux, calculer leur vitesse et mesurer quantitativement l’erreur commise par votre méthode.
+
+```{r}
+
+library(readxl)
+library(nnet)
+library(caret)
+library(dplyr)
+
+# Harmonisation des niveaux
+trainData$Cargo <- factor(trainData$Cargo)
+trainData$Status <- factor(trainData$Status)
+
+testData$Cargo <- factor(as.character(testData$Cargo), levels = levels(trainData$Cargo))
+testData$Status <- factor(as.character(testData$Status), levels = levels(trainData$Status))
+
+# Suppression des lignes avec niveaux inconnus devenus NA
+testData <- testData[complete.cases(testData), ]
+
+# Création du modèle de régression linéaire pour prédire la vitesse (SOG)
+model <- lm(SOG ~ COG + Length + Width + Draft + Cargo + Status, data = trainData)
+
+# Prédiction de la vitesse sur les données de test
+predictions <- predict(model, newdata = testData)
+
+# # Calcul de l'erreur quadratique moyenne RMSE
+rmse <- RMSE(predictions, testData$SOG)
+cat("Erreur quadratique moyenne (RMSE) :", rmse, "\n")
+
+# Comparaison des prédictions avec les vraies valeurs pour 5 bateaux
+sample_test <- testData[1:5, ]
+sample_pred <- predict(model, newdata = sample_test)
+
+# Création d’un tableau comparatif : SOG réelle, prédite et erreur absolue
+comparison <- data.frame(
+  Bateau = 1:5,
+  SOG_Réelle = sample_test$SOG,
+  SOG_Prédit = sample_pred,
+  Erreur = abs(sample_test$SOG - sample_pred)
+)
+print(comparison)
+
+```

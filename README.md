@@ -35,7 +35,7 @@ Créer une application complète d’exploration, nettoyage, visualisation et pr
 
 ## Technologies
 - R (dplyr, ggplot2, leaflet, shiny, nnet, caret, corrplot, vcd, …)
-- RMarkdown (`projet_BigData.Rmd`) → compile en HTML/PDF
+- RMarkdown (projet_BigData.Rmd) → compile en HTML/PDF
 
 ## Comment exécuter
 1. Installer R et RStudio.
